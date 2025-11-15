@@ -17,16 +17,16 @@
 
         <!-- add worker modele  -->
         <!-- Main Modal -->
-        <div id="crud-modal" class="hidden fixed inset-0 z-50 
+        <div id="crud-modal" class=" fixed inset-0 z-50 
             flex justify-center items-center
             bg-black/50">
 
-            <div class="relative p-4 w-full max-w-md max-h-full">
+            <div class="relative p-2 w-full max-w-md max-h-full">
                 <!-- Modal content -->
                 <div class="relative bg-white border border-default rounded-base shadow-sm p-4 md:p-6">
 
                     <!-- Modal header -->
-                    <div class="flex items-center justify-between border-b border-default pb-4 md:pb-5">
+                    <div class="flex items-center justify-between border-b border-default pb-2 md:pb-2">
                         <h3 class="text-lg font-medium text-heading">Add New Worker</h3>
 
                         <button id="close-model" type="button"
@@ -45,7 +45,7 @@
 
                     <!-- Modal body -->
                     <form id="worker-form">
-                        <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
+                        <div class="grid gap-1 grid-cols-1 py-2 md:py-4">
 
                             <div class="col-span-2">
                                 <label for="name" class="block mb-2.5 text-sm font-medium text-heading">Name</label>
@@ -53,6 +53,14 @@
                                       text-heading text-sm rounded-base focus:ring-brand 
                                       focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                                     placeholder="Type worker name" required>
+                            </div>
+
+                            <div class="col-span-2">
+                                <label for="photo" class="block mb-2.5 text-sm font-medium text-heading">Photo</label>
+                                <input type="file" id="photo" name="photo" accept="image/*" class="block w-full text-sm text-heading rounded-base border border-default-medium 
+                                      text-heading text-sm rounded-base focus:ring-brand px-3 py-2.5
+                                      focus:border-brand">
+                                <img id="photo-preview" class="mt-2 w-5 h-5 object-cover rounded-full hidden" />
                             </div>
 
                             <div class="col-span-2 sm:col-span-1">

@@ -11,25 +11,45 @@ modal.addEventListener("click", (e) => {
     if (e.target === modal) modal.classList.add("hidden");
 });
 
+
 // add new player
 // workers storing object
 const Name = document.getElementById("name");
 const Role = document.querySelector("select");
 const Email = document.getElementById("Email");
 const phone = document.getElementById("phone");
+const photoInput = document.getElementById("photo");
+const photoPreview = document.getElementById("photo-preview");
 
 const Workers = []
+
+// add worker
 const addWorker = () => {
-    console.log("hi")
     const worker =  {
         id : Workers.length,
         name : Name.value.trim(),
         role : Role.value.trim(),
         email : Email.value.trim(),
-        phone : phone.value.trim()
+        phone : phone.value.trim(),
+        photo : photoPreview.src || null
     }
     Workers.push(worker)
+    
 }
+
+// add photo
+photoInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = () => {
+        photoPreview.src = reader.result
+        photoPreview.classList.remove("hidden");
+    };
+    reader.readAsDataURL(file);
+});
+
 
 const form = document.getElementById("worker-form");
 document.getElementById("submit-worker").addEventListener("click", (e) =>{

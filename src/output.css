@@ -225,11 +225,20 @@
   .top-3 {
     top: calc(var(--spacing) * 3);
   }
+  .top-30 {
+    top: calc(var(--spacing) * 30);
+  }
+  .top-100 {
+    top: calc(var(--spacing) * 100);
+  }
   .right-0 {
     right: calc(var(--spacing) * 0);
   }
   .right-3 {
     right: calc(var(--spacing) * 3);
+  }
+  .right-30 {
+    right: calc(var(--spacing) * 30);
   }
   .left-0 {
     left: calc(var(--spacing) * 0);
@@ -663,6 +672,12 @@
   }
   .bg-black {
     background-color: var(--color-black);
+  }
+  .bg-black\/50 {
+    background-color: color-mix(in srgb, #000 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-black) 50%, transparent);
+    }
   }
   .bg-gray-300 {
     background-color: var(--color-gray-300);

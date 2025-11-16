@@ -62,19 +62,19 @@ const Workers = []
 const addWorker = () => {
   const experience = []
     const worker =  {
-        id : Workers.length,
-        name : Name.value.trim(),
-        role : Role.value.trim(),
-        email : Email.value.trim(),
-        phone : phone.value.trim(),
-        photo : photoPreview.src || "../img/manicon.png",
-        exp: experience
-      }
-      const exp = {
-        years :  yearsExp.value.trim(),
-        skills : skillsExp.value.trim(), 
-        companies : companiesExp.value.trim()
-      }
+      id : Workers.length,
+      name : Name.value.trim(),
+      role : Role.value.trim(),
+      email : Email.value.trim(),
+      phone : phone.value.trim(),
+      photo : photoPreview.src || "../img/manicon.png",
+      exp: experience
+    }
+    const exp = {
+      years :  yearsExp.value.trim(),
+      skills : skillsExp.value.trim(), 
+      companies : companiesExp.value.trim()
+    }
     experience.push(exp);
     Workers.push(worker)
     displayWorkerCard(worker);   
@@ -130,3 +130,29 @@ document.getElementById("submit-exp").addEventListener("click", (e) => {
   form.reset();
   console.log(Workers);
 });
+
+// manuplating data displaying
+const SalleConference = document.getElementById("Salle-de-conference");
+const conferenceSalleBtn = document.getElementById("conference-salle-btn");
+const workersModel = document.getElementById("workers-model");
+const workerContairer = document.getElementById("worker-contairer");
+
+conferenceSalleBtn.addEventListener("click", () => {
+  const workersList = document.createElement("div");
+  workersList.className = "bg-white";
+
+  Workers.map(worker => {
+    workersList.innerHTML += `
+    <div class="flex flex-row items-center gap-5 text-slate-800">
+    <img src="${worker.image}" alt="${worker.name}" class="relative inline-block h-[38px] w-[38px] !rounded-full object-cover object-center" />
+    <div>
+    <h5 class="font-semibold text-slate-800">${worker.name}</h5>
+    <p class="text-xs uppercase font-bold text-slate-500">${worker.role}</p>
+    </div>
+    </div>
+    `
+  })
+  console.log("hoi")  
+  workersModel.classList.remove("hidden");
+  workerContairer.append(workersList);
+})

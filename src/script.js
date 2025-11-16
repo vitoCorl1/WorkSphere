@@ -31,10 +31,10 @@ const addWorker = () => {
         role : Role.value.trim(),
         email : Email.value.trim(),
         phone : phone.value.trim(),
-        photo : photoPreview.src || null
+        photo : photoPreview.src || "../img/manicon.png"
     }
     Workers.push(worker)
-    
+    displayWorkerCard(worker);   
 }
 
 // add photo
@@ -50,6 +50,22 @@ photoInput.addEventListener("change", (e) => {
     reader.readAsDataURL(file);
 });
 
+const workersContainer = document.getElementById("workers-container");
+
+const displayWorkerCard = (worker) => {
+  const card = document.createElement("div");
+  workersContainer.classList.remove("hidden")
+  card.innerHTML = `
+    <div class="flex flex-row items-center gap-5 text-slate-800">
+        <img src="${worker.photo}" alt="${worker.name}" class="relative inline-block h-[38px] w-[38px] !rounded-full object-cover object-center" />
+        <div>
+            <h5 class="font-semibold text-slate-800">${worker.name}</h5>
+            <p class="text-xs uppercase font-bold text-slate-500">${worker.role}</p>
+        </div>
+    </div>
+  `
+  workersContainer.append(card)
+}
 
 const form = document.getElementById("worker-form");
 document.getElementById("submit-worker").addEventListener("click", (e) =>{
@@ -57,5 +73,7 @@ document.getElementById("submit-worker").addEventListener("click", (e) =>{
     addWorker();
     modal.classList.add("hidden");
     form.reset()
+    photoPreview.classList.add("hidden");
+    photoPreview.src = "../img/manicon.png"
     console.log(Workers);
 })

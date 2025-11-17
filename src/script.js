@@ -137,14 +137,19 @@ const conferenceSalleBtn = document.getElementById("conference-salle-btn");
 const workersModel = document.getElementById("workers-model");
 const workerContairer = document.getElementById("worker-contairer");
 
-conferenceSalleBtn.addEventListener("click", () => {
-  const workersList = document.createElement("div");
-  workersList.className = "bg-white";
+workersModel.addEventListener("click", (e) => {
+  if(e.target == workersModel) workersModel.classList.add("hidden")
+})
 
+conferenceSalleBtn.addEventListener("click", () => {
+  workerContairer.innerHTML = ``;
+  const comfworkersList = document.createElement("div");
+  comfworkersList.className = "bg-white";
+  
   Workers.map(worker => {
-    workersList.innerHTML += `
+    comfworkersList.innerHTML += `
     <div class="flex flex-row items-center gap-5 text-slate-800">
-    <img src="${worker.image}" alt="${worker.name}" class="relative inline-block h-[38px] w-[38px] !rounded-full object-cover object-center" />
+    <img src="${worker.photo}" alt="${worker.name}" class="relative inline-block h-[38px] w-[38px] !rounded-full object-cover object-center" />
     <div>
     <h5 class="font-semibold text-slate-800">${worker.name}</h5>
     <p class="text-xs uppercase font-bold text-slate-500">${worker.role}</p>
@@ -152,7 +157,37 @@ conferenceSalleBtn.addEventListener("click", () => {
     </div>
     `
   })
-  console.log("hoi")  
   workersModel.classList.remove("hidden");
-  workerContairer.append(workersList);
+  if(Workers.length == 0) workersModel.classList.add("hidden");
+  workerContairer.append(comfworkersList);
+})
+
+
+const SalleSecurite = document.getElementById("Salle-de-securite");
+document.getElementById("Salle-securite-btn").addEventListener("click", () => {
+  const securite = Workers.filter(e => e.role == "Agent de sécurité");
+  console.log("security", securite);
+  const securityWorkersList = document.createElement("div");
+  securityWorkersList.className = "bg-white";
+
+  workerContairer.innerHTML = ``;
+
+  securite.forEach(worker => {
+    securityWorkersList.innerHTML += `
+      <div class="flex flex-row items-center gap-5 text-slate-800">
+      <img src="${worker.photo}" alt="${worker.name}" class="relative inline-block h-[38px] w-[38px] !rounded-full object-cover object-center" />
+      <div>
+      <h5 class="font-semibold text-slate-800">${worker.name}</h5>
+      <p class="text-xs uppercase font-bold text-slate-500">${worker.role}</p>
+      </div>
+      </div>
+    `
+  })
+
+  // securityWorkersList.addEventListener("click", () => {
+  //   const securityContainer = document.getElementById("security-container");
+  //   const security = document.createElement()
+  // })
+  workersModel.classList.remove("hidden")
+  workerContairer.append(securityWorkersList);
 })

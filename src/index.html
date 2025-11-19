@@ -14,8 +14,7 @@
             <button id="add-Worker-Button" class="ml-10 mt-3 bg-white text-black p-2 rounded cursor-pointer">Add New
                 Worker
             </button>
-            <div id="workers-container"
-                class="hidden flex-col justify-center ml-2 w-55 bg-gray-50 mt-3 p-2 rounded cursor-pointer"></div>
+            <div id="workers-container" class="hidden flex-col justify-center ml-2 w-55 bg-gray-50 mt-3 p-2 rounded cursor-pointer"></div>
         </div>
 
         <!-- add worker modele  -->
@@ -68,7 +67,7 @@
 
                             <div class="col-span-2 sm:col-span-1">
                                 <label for="category" class="block mb-2.5 text-sm font-medium text-heading">Role</label>
-                                <select id="category" class="block w-91 px-3 py-3 bg-neutral-secondary-medium border 
+                                <select id="role" class="block w-91 px-3 py-3 bg-neutral-secondary-medium border 
                                        border-default-medium text-heading text-sm rounded-base 
                                        focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
 
@@ -207,10 +206,9 @@
         </div>
 
         <div id="workers-model" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 bg-opacity-50">
-            <div class="relative p-4 w-full max-w-md max-h-full">
-                <div id="worker-contairer" class="relative bg-white border border-default rounded-base shadow-sm p-4 md:p-6 rounded">
-
-                </div>
+            <div class="relative p-4 w-full max-w-md max-h-full flex flex-col">
+                <div id="worker-contairer" class="relative bg-white border border-default rounded-base shadow-sm p-4 md:p-6 rounded"></div>
+                <button id="cancel-worker-btn" class="bg-red-300 p-2 rounded justify-center items-center">cancel</button>
             </div>
         </div>
 
@@ -229,19 +227,31 @@
                 <div class="col-span-2 row-span-6 col-start-5 row-start-1 bg-white/40 ml-5"></div>
                 <div class="col-span-6 row-span-2 col-start-7 row-start-3 bg-white/40">4</div>
                 <div class="col-span-3 row-span-2 col-start-7 row-start-5 bg-white/40 mr-13">5</div>
-                <div class="col-span-3 row-span-2 col-start-10 row-start-5 bg-white/40 -ml-13">6</div>
-                <div class="col-span-3 row-span-2 col-start-7 row-start-1 bg-white/40 mr-13">7</div>
+                <div class="col-span-3 row-span-2 col-start-10 row-start-5 bg-white/40 -ml-13">
+                    <h5 class="text-white">The archive room</h5>
+                    <button id="server-room-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
+                    <div id="server-room-container" class="hidden flex flex-col gap-1"></div>
+                </div>
+
+                                <!-- server Room -->
+                <div class="col-span-3 row-span-2 col-start-7 row-start-1 bg-white/40 mr-13 flex flex-col justify-center items-center">
+                    <h5 class="text-white">server Room</h5>
+                    <button id="server-room-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
+                    <div id="server-room-container" class="hidden flex flex-col gap-1"></div>
+                </div>
+
+                                <!-- Security Room -->
                 <div id="Salle-de-securite" class="col-span-3 row-span-2 col-start-10 row-start-1 bg-white/40 -ml-13 flex flex-col justify-center items-center">
-                    <h5 class="text-white">Salle de securite</h5>
+                    <h5 class="text-white">Security Room</h5>
                     <button id="Salle-securite-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
-                    <div id="security-container" class="hidden flex flex-row"></div>
+                    <div id="security-container" class="hidden flex flex-col gap-1"></div>
                 </div>
             </div>
 
         </div>
     </div>
-    <script src="./script.js"></script>
+            <script src="./script.js"></script>
 
 </body>
 
-</html
+</html>

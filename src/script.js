@@ -83,15 +83,15 @@ const Workers = [
     photo : "../img/manicon.png",
   }, {
     id: 24,
-    name : "aymane",
-    role : "Agent de sécurité",
+    name : "samira",
+    role : "Réceptionnistes",
     email : "hsdhsd@gmai.com",
     phone : "034333334734",
     photo : "../img/manicon.png",
   }, {
     id: 24,
-    name : "aymane",
-    role : "Agent de sécurité",
+    name : "somia",
+    role : "Nettoyage",
     email : "hsdhsd@gmai.com",
     phone : "034333334734",
     photo : "../img/manicon.png",
@@ -177,34 +177,9 @@ document.getElementById("submit-exp").addEventListener("click", (e) => {
 
 // manuplating data displaying
 const SalleConference = document.getElementById("Salle-de-conference");
-const conferenceSalleBtn = document.getElementById("conference-salle-btn");
 const workersModel = document.getElementById("workers-model");
 const workerContairer = document.getElementById("worker-contairer");
 
-workersModel.addEventListener("click", (e) => {
-  if(e.target == workersModel) workersModel.classList.add("hidden")
-})
-
-conferenceSalleBtn.addEventListener("click", () => {
-  workerContairer.innerHTML = ``;
-  const comfworkersList = document.createElement("div");
-  comfworkersList.className = "bg-white";
-  
-  Workers.map(worker => {
-    comfworkersList.innerHTML += `
-      <div class="flex flex-row items-center gap-5 text-slate-800">
-      <img src="${worker.photo}" alt="${worker.name}" class="relative inline-block h-[38px] w-[38px] !rounded-full object-cover object-center" />
-      <div>
-      <h5 class="font-semibold text-slate-800">${worker.name}</h5>
-      <p class="text-xs uppercase font-bold text-slate-500">${worker.role}</p>
-      </div>
-      </div>
-    `
-  })
-  workersModel.classList.remove("hidden");
-  if(Workers.length == 0) workersModel.classList.add("hidden");
-  workerContairer.append(comfworkersList);
-})
 
 document.getElementById("cancel-worker-btn").addEventListener("click", () => workersModel.classList.add("hidden"))
 
@@ -213,7 +188,7 @@ const SalleSecurite = document.getElementById("Salle-de-securite");
 document.getElementById("Salle-securite-btn").addEventListener("click", () => {
   // filter the hole object to only secritys
   const securite = Workers.filter(e => e.role == "Agent de sécurité");
-
+  
   // creat displaying security list
   const securityWorkersList = document.createElement("div");
   securityWorkersList.className = "bg-white cursor-pointer";
@@ -228,13 +203,13 @@ document.getElementById("Salle-securite-btn").addEventListener("click", () => {
   securiteItem.className = "flex flex-row items-center gap-5 text-slate-800 cursor-pointer";
   
   securiteItem.innerHTML += `
-    <img src="${worker.photo}" alt="${worker.name}" class="h-[38px] w-[38px] rounded-full object-cover" />
-    <div>
-      <h5 class="font-semibold text-slate-800">${worker.name}</h5>
-      <p class="text-xs uppercase font-bold text-slate-500">${worker.role}</p>
-    </div>
+  <img src="${worker.photo}" alt="${worker.name}" class="h-[38px] w-[38px] rounded-full object-cover" />
+  <div>
+  <h5 class="font-semibold text-slate-800">${worker.name}</h5>
+  <p class="text-xs uppercase font-bold text-slate-500">${worker.role}</p>
+  </div>
   `;
-
+  
   // add the security i sho's in he's place
   securiteItem.addEventListener("click", () => {
     const securityContainer = document.getElementById("security-container");
@@ -249,20 +224,20 @@ document.getElementById("Salle-securite-btn").addEventListener("click", () => {
             <h5 class="font-semibold text-slate-800">${worker.name}</h5>
             <p class="text-xs uppercase font-bold text-slate-500">${worker.role}</p>
         </div>
-      </div>
-    `;
-
-    securityContainer.append(securityCard);
-    securityContainer.classList.remove("hidden");
-    workersContainer.classList.add("hidden");
+        </div>
+        `;
+        
+        securityContainer.append(securityCard);
+        securityContainer.classList.remove("hidden");
+        workersContainer.classList.add("hidden");
   });
 
   securityWorkersList.append(securiteItem);
 });
 
-  
-  workerContairer.append(securityWorkersList);
-  workersModel.classList.remove("hidden")
+
+workerContairer.append(securityWorkersList);
+workersModel.classList.remove("hidden")
 })
 
 
@@ -270,7 +245,7 @@ document.getElementById("server-room-btn").addEventListener("click", () => {
   // filter how hava acces to the server room
   const allowedServerRoles = ["Manager", "Nettoyage", "Technicien IT"];
   const ServerRoomAccesWorkers = Workers.filter(e => allowedServerRoles.includes(e.role));
-
+  
   workersModel.classList.remove("hidden");
   
   workerContairer.innerHTML = ``; 
@@ -279,11 +254,11 @@ document.getElementById("server-room-btn").addEventListener("click", () => {
     const ServerWorkersDisplay = document.createElement("div");
     ServerWorkersDisplay.className = "bg-white flex flex-row"
     ServerWorkersDisplay.innerHTML = `
-      <img src="${serverWorkers.photo}" alt="${serverWorkers.name}" class="h-[38px] w-[38px] rounded-full object-cover" />
+    <img src="${serverWorkers.photo}" alt="${serverWorkers.name}" class="h-[38px] w-[38px] rounded-full object-cover" />
       <div>
         <h5 class="font-semibold text-slate-800">${serverWorkers.name}</h5>
         <p class="text-xs uppercase font-bold text-slate-500">${serverWorkers.role}</p>
-      </div>
+        </div>
     `  
     workerContairer.append(ServerWorkersDisplay);
   })
@@ -307,7 +282,7 @@ document.getElementById("archive-room-btn").addEventListener("click", () => {
         <h5 class="font-semibold text-slate-800">${archiveWorkers.name}</h5>
         <p class="text-xs uppercase font-bold text-slate-500">${archiveWorkers.role}</p>
       </div>
-    `
+      `
     workerContairer.append(archiveWorkersDisplay);
   })
 })
@@ -325,16 +300,95 @@ document.getElementById("Staff-room-btn").addEventListener("click", () => {
   workerContairer.innerHTML = ``;
   
   staffRoomAccesWorkers.forEach(staffWorkers => {
-    const archiveWorkersDisplay = document.createElement("div");
-    archiveWorkersDisplay.className = "bg-white flex flex-row";
-
-    archiveWorkersDisplay.innerHTML = `
-       <img src="${staffWorkers.photo}" alt="${staffWorkers.name}" class="h-[38px] w-[38px] rounded-full object-cover" />
-      <div>
-        <h5 class="font-semibold text-slate-800">${staffWorkers.name}</h5>
-        <p class="text-xs uppercase font-bold text-slate-500">${staffWorkers.role}</p>
-      </div>
+    const staffWorkersDisplay = document.createElement("div");
+    staffWorkersDisplay.className = "bg-white flex flex-row";
+    
+    staffWorkersDisplay.innerHTML = `
+    <img src="${staffWorkers.photo}" alt="${staffWorkers.name}" class="h-[38px] w-[38px] rounded-full object-cover" />
+    <div>
+    <h5 class="font-semibold text-slate-800">${staffWorkers.name}</h5>
+    <p class="text-xs uppercase font-bold text-slate-500">${staffWorkers.role}</p>
+    </div>
     `
-    workerContairer.append(archiveWorkersDisplay);
+    workerContairer.append(staffWorkersDisplay);
   })
 })
+
+// conference Room
+document.getElementById("conference-room-btn").addEventListener("click", () => {
+  workersModel.classList.remove("hidden");
+
+  const allowedconferenceRoles = ["Nettoyage", "other", "Manager"];
+  const conferenceRoomAccesWorkers = Workers.filter(e => allowedconferenceRoles.includes(e.role));
+  console.log(conferenceRoomAccesWorkers);
+  
+  workerContairer.innerHTML = ``;
+  
+  conferenceRoomAccesWorkers.forEach(conferenceWorkers => {
+    const archiveWorkersDisplay = document.createElement("div");
+    archiveWorkersDisplay.className = "bg-white flex flex-row";
+    
+    archiveWorkersDisplay.innerHTML = `
+       <img src="${conferenceWorkers.photo}" alt="${conferenceWorkers.name}" class="h-[38px] w-[38px] rounded-full object-cover" />
+      <div>
+      <h5 class="font-semibold text-slate-800">${conferenceWorkers.name}</h5>
+      <p class="text-xs uppercase font-bold text-slate-500">${conferenceWorkers.role}</p>
+      </div>
+      `
+      workerContairer.append(archiveWorkersDisplay);
+  })
+})
+
+
+// Reseption Room
+document.getElementById("reseption-room-btn").addEventListener("click", (e) => {
+  if(e.target == workersModel) workersModel.classList.add("hidden")
+})
+
+document.getElementById("reseption-room-btn").addEventListener("click", () => {
+  workersModel.classList.remove("hidden");
+  workerContairer.innerHTML = ``;
+  
+  const allowedReseptionRoles = ["Réceptionnistes", "Nettoyage", "Manager"];
+  const reseptionRoomAccesWorkers = Workers.filter(e => allowedReseptionRoles.includes(e.role));
+  console.log(reseptionRoomAccesWorkers);
+  
+  reseptionRoomAccesWorkers.forEach(resptionWorkers => {
+    const reseptionWorkersDisplay = document.createElement("div");
+    reseptionWorkersDisplay.className = "bg-white flex flex-row";
+
+    reseptionWorkersDisplay.innerHTML = `
+      <div class="flex flex-row items-center gap-5 text-slate-800">
+        <img src="${resptionWorkers.photo}" alt="${resptionWorkers.name}" class="relative inline-block h-[38px] w-[38px] !rounded-full object-cover object-center" />
+        <div>
+          <h5 class="font-semibold text-slate-800">${resptionWorkers.name}</h5>
+          <p class="text-xs uppercase font-bold text-slate-500">${resptionWorkers.role}</p>
+        </div>
+      </div>
+    `
+    workerContairer.append(reseptionWorkersDisplay);
+  })
+  
+})
+
+
+// document.getElementById("conference-salle-btn").addEventListener("click", () => {
+//   workerContairer.innerHTML = ``;
+//   const comfworkersList = document.createElement("div");
+//   comfworkersList.className = "bg-white";
+  
+//   Workers.forEach(worker => {
+//     comfworkersList.innerHTML += `
+//       <div class="flex flex-row items-center gap-5 text-slate-800">
+//       <img src="${worker.photo}" alt="${worker.name}" class="relative inline-block h-[38px] w-[38px] !rounded-full object-cover object-center" />
+//       <div>
+//       <h5 class="font-semibold text-slate-800">${worker.name}</h5>
+//       <p class="text-xs uppercase font-bold text-slate-500">${worker.role}</p>
+//       </div>
+//       </div>
+//     `
+//   })
+//   workersModel.classList.remove("hidden");
+//   if(Workers.length == 0) workersModel.classList.add("hidden");
+//   workerContairer.append(comfworkersList);
+// })

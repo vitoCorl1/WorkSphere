@@ -267,17 +267,19 @@ document.getElementById("Salle-securite-btn").addEventListener("click", () => {
 
 
 const ServerworkersModel = document.getElementById("workers-model");
-const Serverworkerscontairer = document.getElementById("worker-contairer");
+// const Serverworkerscontairer = document.getElementById("worker-contairer");
 document.getElementById("server-room-btn").addEventListener("click", () => {
   // filter how hava acces to the server room
   const allowedServerRoles = ["Manager", "Nettoyage", "Technicien IT"];
   const ServerRoomAccesWorkers = Workers.filter(e => allowedServerRoles.includes(e.role));
 
-  const ServerWorkersDisplay = document.createElement("div");
-  ServerWorkersDisplay.className = "bg-white flex flex-row"
   ServerworkersModel.classList.remove("hidden");
-
+  
+  workerContairer.innerHTML = ``; 
+  
   ServerRoomAccesWorkers.forEach(serverWorkers => {
+    const ServerWorkersDisplay = document.createElement("div");
+    ServerWorkersDisplay.className = "bg-white flex flex-row"
     ServerWorkersDisplay.innerHTML = `
       <img src="${serverWorkers.photo}" alt="${serverWorkers.name}" class="h-[38px] w-[38px] rounded-full object-cover" />
       <div>
@@ -285,6 +287,30 @@ document.getElementById("server-room-btn").addEventListener("click", () => {
         <p class="text-xs uppercase font-bold text-slate-500">${serverWorkers.role}</p>
       </div>
     `  
+    workerContairer.append(ServerWorkersDisplay);
   })
-  Serverworkerscontairer.append(ServerWorkersDisplay);
+})
+
+
+const archiveWorkersModel = document.getElementById("workers-model"); 
+document.getElementById("archive-room-btn").addEventListener("click", () => {
+  archiveWorkersModel.classList.remove("hidden");
+  
+  workerContairer.innerHTML = ``;
+  
+  const allowedArchiveRoles = ["Technicien IT", "Manager"];
+  const archiveRoomAccesWorkers = Workers.filter(e => allowedArchiveRoles.includes(e.role));
+  
+  archiveRoomAccesWorkers.forEach(archiveWorkers => {
+    const archiveWorkersDisplay = document.createElement("div");
+    archiveWorkersDisplay.className = "bg-white flex flex-row";
+    archiveWorkersDisplay.innerHTML = `
+      <img src="${archiveWorkers.photo}" alt="${archiveWorkers.name}" class="h-[38px] w-[38px] rounded-full object-cover" />
+      <div>
+        <h5 class="font-semibold text-slate-800">${archiveWorkers.name}</h5>
+        <p class="text-xs uppercase font-bold text-slate-500">${archiveWorkers.role}</p>
+      </div>
+    `
+    workerContairer.append(archiveWorkersDisplay);
+  })
 })

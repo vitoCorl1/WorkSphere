@@ -266,14 +266,12 @@ document.getElementById("Salle-securite-btn").addEventListener("click", () => {
 })
 
 
-const ServerworkersModel = document.getElementById("workers-model");
-// const Serverworkerscontairer = document.getElementById("worker-contairer");
 document.getElementById("server-room-btn").addEventListener("click", () => {
   // filter how hava acces to the server room
   const allowedServerRoles = ["Manager", "Nettoyage", "Technicien IT"];
   const ServerRoomAccesWorkers = Workers.filter(e => allowedServerRoles.includes(e.role));
 
-  ServerworkersModel.classList.remove("hidden");
+  workersModel.classList.remove("hidden");
   
   workerContairer.innerHTML = ``; 
   
@@ -292,9 +290,8 @@ document.getElementById("server-room-btn").addEventListener("click", () => {
 })
 
 
-const archiveWorkersModel = document.getElementById("workers-model"); 
 document.getElementById("archive-room-btn").addEventListener("click", () => {
-  archiveWorkersModel.classList.remove("hidden");
+  workersModel.classList.remove("hidden");
   
   workerContairer.innerHTML = ``;
   
@@ -309,6 +306,33 @@ document.getElementById("archive-room-btn").addEventListener("click", () => {
       <div>
         <h5 class="font-semibold text-slate-800">${archiveWorkers.name}</h5>
         <p class="text-xs uppercase font-bold text-slate-500">${archiveWorkers.role}</p>
+      </div>
+    `
+    workerContairer.append(archiveWorkersDisplay);
+  })
+})
+
+
+
+// Staff Room
+document.getElementById("Staff-room-btn").addEventListener("click", () => {
+  workersModel.classList.remove("hidden");
+
+  const allowedStaffRoles = ["Nettoyage", "other", "Manager"];
+  const staffRoomAccesWorkers = Workers.filter(e => allowedStaffRoles.includes(e.role));
+  console.log(staffRoomAccesWorkers);
+  
+  workerContairer.innerHTML = ``;
+  
+  staffRoomAccesWorkers.forEach(staffWorkers => {
+    const archiveWorkersDisplay = document.createElement("div");
+    archiveWorkersDisplay.className = "bg-white flex flex-row";
+
+    archiveWorkersDisplay.innerHTML = `
+       <img src="${staffWorkers.photo}" alt="${staffWorkers.name}" class="h-[38px] w-[38px] rounded-full object-cover" />
+      <div>
+        <h5 class="font-semibold text-slate-800">${staffWorkers.name}</h5>
+        <p class="text-xs uppercase font-bold text-slate-500">${staffWorkers.role}</p>
       </div>
     `
     workerContairer.append(archiveWorkersDisplay);

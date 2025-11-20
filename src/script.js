@@ -64,7 +64,7 @@ const addWorker = () => {
   }];
 
   const worker = {
-    id: Workers.length + 1,
+    id: Date.now(),
     name: Name.value.trim(),
     role: Role.value.trim(),
     email: Email.value.trim(),
@@ -98,17 +98,25 @@ const displayWorkerCard = () => {
   workersContainer.innerHTML = "";  
   workersContainer.classList.remove("hidden");
 
-  Workers.forEach(e => {
+  Workers.forEach((e, i) => {
     const card = document.createElement("div");
     card.innerHTML = `
-      <div class="flex flex-row items-center gap-5 text-slate-800">
+      <div class="flex flex-row items-center gap-2 text-slate-800">
         <img src="${e.photo}" class="h-[38px] w-[38px] rounded-full object-cover"/>
         <div>
             <h5 class="font-semibold">${e.name}</h5>
-            <p class="text-xs uppercase font-bold text-slate-500">${e.role}</p>
+            <p class="text-xs font-bold text-slate-500">${e.role}</p>
         </div>
+        <button
+          class="deleteBtn ml-auto px-3 py-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded-md shadow transition cursor-pointer">
+          <img src="../img/icons8-garbage-48.png" class="w-5" alt="">
+        </button>
       </div>
     `;
+      card.querySelector(".deleteBtn").addEventListener("click", () => {
+      Workers.splice(i, 1);
+      displayWorkerCard();
+    })
     workersContainer.append(card);
   });
 };
@@ -145,11 +153,15 @@ const workerContairer = document.getElementById("worker-contairer");
 document.getElementById("cancel-worker-btn").addEventListener("click", () => hide(workersModel));
 workersModel.addEventListener("click", e => e.target === workersModel && hide(workersModel));
 
+let selectedWorker = null; 
+let assignedWorkers = [];
+
 const showWorkersByRole = (allowedRoles) => {
   show(workersModel);
   workerContairer.innerHTML = "";
 
-  const filtered = Workers.filter(w => allowedRoles.includes(w.role));
+  const filtered = Workers.filter(w => allowedRoles.includes(w.role) && !assignedWorkers.includes(w.id));
+
   filtered.forEach(worker => {
     const item = document.createElement("div");
     item.className = "bg-white flex flex-row items-center gap-4 cursor-pointer";
@@ -160,32 +172,101 @@ const showWorkersByRole = (allowedRoles) => {
           <p class="text-xs uppercase font-bold text-slate-500">${worker.role}</p>
         </div>
     `;
+    item.onclick = () => {
+      selectWorker(worker);
+
+    } 
     workerContairer.append(item);
   });
 };
 
+
+const selectWorker = (worker) => {
+    if (assignedWorkers.includes(worker.id)) return;
+
+    assignedWorkers.push(worker.id);
+
+    addWorkerToRoom(worker, currentRoomContainer);
+
+    updateSidebarUI();
+
+    hide(workersModel);
+};
+
+
+function addWorkerToRoom(worker, container) {
+    const div = document.createElement("div");
+    div.className = "p-2 bg-white rounded flex items-center gap-2";
+
+    div.innerHTML = `
+        <img src="${worker.photo}" class="h-[38px] w-[38px] rounded-full"/>
+        <div>
+            <h3 class="font-bold">${worker.name}</h3>
+            <p class="text-xs uppercase text-slate-600">${worker.role}</p>
+        </div>
+    `;
+
+    container.appendChild(div);
+    container.classList.remove("hidden");
+}
+
+
+function updateSidebarUI() {
+    workerContairer.innerHTML = "";
+
+    const available = Workers.filter(w => !assignedWorkers.includes(w.id));
+    available.forEach(worker => {
+        const item = document.createElement("div");
+        item.className = "worker-item";
+        item.textContent = worker.name;
+        item.onclick = () => selectWorker(worker);
+        workerContairer.appendChild(item);
+    });
+}
+
+
+
+const reseptionRoomContainer = document.getElementById("reseption-room-container");
+const conferenceRoomContainer = document.getElementById("conference-room-container");
+const StaffRoomContainer = document.getElementById("Staff-room-container");
+const archiveRoomContainer = document.getElementById("archive-room-container");
+const serverRoomContainer = document.getElementById("server-room-container");
+const securityRoomContainer = document.getElementById("security-room-container");
+
 // ======= Specific Rooms =======
+let currentRoomContainer = null;
 document.getElementById("Salle-securite-btn").addEventListener("click", () => {
-  showWorkersByRole(["Agent de sécurité", "Nettoyage"]);
+    currentRoomContainer = securityRoomContainer;
+    showWorkersByRole(["Agent de sécurité", "Nettoyage"]);
 });
 
 document.getElementById("server-room-btn").addEventListener("click", () => {
+  currentRoomContainer = serverRoomContainer;
   showWorkersByRole(["Manager", "Nettoyage", "Technicien IT"]);
 });
 
 document.getElementById("archive-room-btn").addEventListener("click", () => {
+  currentRoomContainer = archiveRoomContainer;
   showWorkersByRole(["Technicien IT", "Manager"]);
 });
 
 document.getElementById("Staff-room-btn").addEventListener("click", () => {
+  currentRoomContainer = StaffRoomContainer;
   showWorkersByRole(["Nettoyage", "other", "Manager"]);
 });
 
 document.getElementById("conference-room-btn").addEventListener("click", () => {
-  showWorkersByRole(["Nettoyage", "other", "Manager"]);
+  currentRoomContainer = conferenceRoomContainer;
+  showWorkersByRole(["Nettoyage", "other", "Manager"], reseptionRoomContainer);
 });
 
+let secWorkers = 0;
 document.getElementById("reseption-room-btn").addEventListener("click", () => {
-  showWorkersByRole(["Réceptionnistes", "Nettoyage", "Manager"]);
+  if(secWorkers < 2){
+    currentRoomContainer = reseptionRoomContainer;
+    showWorkersByRole(["Réceptionnistes", "Nettoyage", "Manager"]);
+  }else{
+    alert("to much worker in security reseption")
+  }
 });
 

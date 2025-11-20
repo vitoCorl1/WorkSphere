@@ -204,6 +204,10 @@ function addWorkerToRoom(worker, container) {
             <h3 class="font-bold">${worker.name}</h3>
             <p class="text-xs uppercase text-slate-600">${worker.role}</p>
         </div>
+        <button
+          class="deleteBtn ml-auto px-3 py-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded-md shadow transition cursor-pointer">
+          <img src="../img/icons8-garbage-48.png" class="w-5" alt="">
+        </button>
     `;
 
     container.appendChild(div);
@@ -223,7 +227,6 @@ function updateSidebarUI() {
         workerContairer.appendChild(item);
     });
 }
-
 
 
 const reseptionRoomContainer = document.getElementById("reseption-room-container");
@@ -269,4 +272,3 @@ document.getElementById("reseption-room-btn").addEventListener("click", () => {
     alert("to much worker in security reseption")
   }
 });
-

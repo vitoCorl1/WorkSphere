@@ -174,7 +174,6 @@ const showWorkersByRole = (allowedRoles) => {
     `;
     item.onclick = () => {
       selectWorker(worker);
-
     } 
     workerContairer.append(item);
   });
@@ -182,15 +181,11 @@ const showWorkersByRole = (allowedRoles) => {
 
 
 const selectWorker = (worker) => {
-    if (assignedWorkers.includes(worker.id)) return;
-
-    assignedWorkers.push(worker.id);
-
-    addWorkerToRoom(worker, currentRoomContainer);
-
-    updateSidebarUI();
-
-    hide(workersModel);
+  if (assignedWorkers.includes(worker.id)) return;
+  assignedWorkers.push(worker.id);
+  addWorkerToRoom(worker, currentRoomContainer);
+  updateSidebarUI();
+  hide(workersModel);
 };
 
 
@@ -210,10 +205,15 @@ function addWorkerToRoom(worker, container) {
         </button>
     `;
 
-    container.appendChild(div);
-    container.classList.remove("hidden");
-}
+    div.querySelector(".deleteBtn").addEventListener("click", () => {
+      assignedWorkers = assignedWorkers.filter(id => id !== worker.id);
+      div.remove();
+      updateSidebarUI();
+    });
 
+  container.appendChild(div);
+  container.classList.remove("hidden");
+}
 
 function updateSidebarUI() {
     workerContairer.innerHTML = "";

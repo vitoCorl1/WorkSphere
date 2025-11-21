@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WorkSphere</title>
-    <link rel="stylesheet" href="./output.css">
+    <link rel="stylesheet" href="./src/output.css">
 </head>
 
 <body>
@@ -52,9 +52,11 @@
                             <div class="col-span-2">
                                 <label for="name" class="block mb-2.5 text-sm font-medium text-heading">Name</label>
                                 <input type="text" id="name" name="name" class="bg-neutral-secondary-medium border border-default-medium 
-                                      text-heading text-sm rounded-base focus:ring-brand 
+                                        text-heading text-sm rounded-base focus:ring-brand 
                                       focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                                     placeholder="Type worker name" required>
+                                    <span  class=" text-xs mt-1 hidden" id="error-name"  style="color: red;">Name must be at max 10 characters.</span>
+
                             </div>
 
                             <div class="col-span-2">
@@ -69,7 +71,7 @@
                                 <label for="category" class="block mb-2.5 text-sm font-medium text-heading">Role</label>
                                 <select id="role" class="block w-91 px-3 py-3 bg-neutral-secondary-medium border 
                                        border-default-medium text-heading text-sm rounded-base 
-                                       focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
+                                       focus:ring-brand focus:border-brand shadow-xs placeholder:text-body" required>
 
                                     <option>Technicien IT</option>
                                     <option>Réceptionnistes</option>
@@ -77,6 +79,7 @@
                                     <option>Manager</option>
                                     <option>Nettoyage</option>
                                 </select>
+                                <p class="text-red-500 text-xs mt-1 hidden" id="error-role"></p>
                             </div>
 
                             <div class="col-span-2">
@@ -85,6 +88,7 @@
                                       text-heading text-sm rounded-base focus:ring-brand 
                                       focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                                     placeholder="Type worker email" required>
+                                    <span class="text-xs mt-1 hidden" style="color: red;" id="error-email">Enter a valid email address.</span>
                             </div>
 
                             <div class="col-span-2">
@@ -94,6 +98,7 @@
                                       text-heading text-sm rounded-base focus:ring-brand 
                                       focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                                     placeholder="Type worker phone" required>
+                                    <p class="text-red-500 text-xs mt-1 hidden" id="error-phone"></p>
                             </div>
 
                         </div>
@@ -130,7 +135,6 @@
                             </button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -218,44 +222,44 @@
             style="background-image: url('../img/WorkSphere_main.jpg');">
 
             <div class="grid grid-cols-11 grid-rows-6 gap-1 h-full w-full">
-                <div id="Salle-de-Reseption" class="col-span-4 row-span-2 bg-white/40 -mr-5 flex flex-col items-center justify-center">
+                <div id="Salle-de-Reseption" class="col-span-4 row-span-2 -mr-5 flex flex-col items-center justify-center">
                     <h5 class="text-black font-medium">Reseption room</h5>
                     <button id="reseption-room-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
                     <div id="reseption-room-container" class="hidden flex flex-col gap-1"></div>                
                 </div>
 
-                <div id="Reception" class="col-span-4 row-span-4 col-start-1 row-start-3 bg-white/40 -mr-5 flex flex-col justify-center items-center">
+                <div id="Reception" class="col-span-4 row-span-4 col-start-1 row-start-3 bg-red-400/50 -mr-5 flex flex-col justify-center items-center">
                     <h5 class="text-black font-medium">The conference room</h5>
                     <button id="conference-room-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
                     <div id="conference-room-container" class="hidden flex flex-col gap-1"></div>
                 </div>
 
-                <div class="col-span-2 row-span-6 col-start-5 row-start-1 bg-white/40 ml-5"></div>
-                <div class="col-span-6 row-span-2 col-start-7 row-start-3 bg-white/40"></div>
+                <div class="col-span-2 row-span-6 col-start-5 row-start-1 ml-5"></div>
+                <div class="col-span-6 row-span-2 col-start-7 row-start-3"></div>
 
                                 <!-- Staff room -->
-                <div class="col-span-3 row-span-2 col-start-7 row-start-5 bg-white/40 mr-13 flex flex-col justify-center items-center">
+                <div class="col-span-3 row-span-2 col-start-7 row-start-5 mr-13 flex flex-col justify-center items-center">
                     <h5 class="text-black font-medium">Staff room</h5>
                     <button id="Staff-room-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
                     <div id="Staff-room-container" class="hidden flex flex-col gap-1"></div>
                 </div>
 
                                 <!-- archive Room  -->
-                <div class="col-span-3 row-span-2 col-start-10 row-start-5 bg-white/40 -ml-13 flex flex-col justify-center items-center">
+                <div class="col-span-3 row-span-2 col-start-10 row-start-5 bg-red-400/50 -ml-13 flex flex-col justify-center items-center">
                     <h5 class="text-black font-medium">The archive room</h5>
                     <button id="archive-room-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
                     <div id="archive-room-container" class="hidden flex flex-col gap-1"></div>
                 </div>
 
                                 <!-- server Room -->
-                <div class="col-span-3 row-span-2 col-start-7 row-start-1 bg-white/40 mr-13 flex flex-col justify-center items-center">
+                <div class="col-span-3 row-span-2 col-start-7 row-start-1 bg-red-400/50 mr-13 flex flex-col justify-center items-center">
                     <h5 class="text-black font-medium">server Room</h5>
                     <button id="server-room-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
                     <div id="server-room-container" class="hidden flex flex-col gap-1"></div>
                 </div>
 
                                 <!-- Security Room -->
-                <div id="Salle-de-securite" class="col-span-3 row-span-2 col-start-10 row-start-1 bg-white/40 -ml-13 flex flex-col justify-center items-center">
+                <div id="Salle-de-securite" class="col-span-3 row-span-2 col-start-10 row-start-1 bg-red-400/50 -ml-13 flex flex-col justify-center items-center">
                     <h5 class="text-black font-medium">Security Room</h5>
                     <button id="Salle-securite-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
                     <div id="security-room-container" class="hidden flex flex-col gap-1"></div>
@@ -264,8 +268,7 @@
 
         </div>
     </div>
-            <script src="./script.js"></script>
-
+            <script src="./src/script.js"></script>
 </body>
 
 </html>

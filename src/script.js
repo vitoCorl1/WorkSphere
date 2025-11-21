@@ -40,6 +40,7 @@ const Email = document.getElementById("Email");
 const phone = document.getElementById("phone");
 const photoInput = document.getElementById("photo");
 const photoPreview = document.getElementById("photo-preview");
+const input = document.getElementById("")
 
 // Experience inputs
 const yearsExp = document.getElementById("years-exp");
@@ -53,6 +54,77 @@ const Workers = [
   { id: 26, name: "samira", role: "Réceptionnistes", email: "hsdhsd@gmai.com", phone: "034333334734", photo: "../img/manicon.png"},
   { id: 27, name: "somia", role: "Nettoyage", email: "hsdhsd@gmai.com", phone: "034333334734", photo: "../img/manicon.png"},
 ];
+
+// ======= INLINE VALIDATION SYSTEM =======
+
+function showError(input, message, errorId) {
+  const errorEl = document.getElementById(errorId);
+  input.classList.add("text-red-500","border-red-500", "focus:border-red-500");
+  errorEl.textContent = message;
+  errorEl.classList.remove("hidden");
+}
+
+
+const errorName = document.getElementById('error-name'); 
+const errorEmail = document.getElementById('error-email');
+
+function validateForm() {
+  let valid = true;
+
+  
+
+  if (Name.value.trim().length < 3) {
+    errorName.style.display = 'block';
+  } else if (Name.value.trim().length > 10){
+    errorName.style.display = 'block';
+  }
+
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(Email.value.trim())) {
+    errorEmail.style.display = 'block';    
+  }
+
+  if (!/^[0-9]{8,15}$/.test(phone.value.trim())) {
+    showError(phone, "Phone must contain 8-15 digits.", "error-phone");
+    valid = false;
+  }
+
+  if (Role.value.trim() === "") {
+    showError(Role, "Please select a role.", "error-role");
+    valid = false;
+  }
+
+  return valid;
+}
+
+
+// ===== EXPERIENCE MODAL VALIDATION =====
+function validateExperience() {
+  let valid = true;
+
+  clearError(yearsExp, "error-years");
+  clearError(skillsExp, "error-skills");
+
+  if (yearsExp.value.trim() === "" || yearsExp.value < 0) {
+    showError(yearsExp, "Years must be a positive number.", "error-years");
+    valid = false;
+  }
+
+  if (skillsExp.value.trim().length < 2) {
+    showError(skillsExp, "Skills field cannot be empty.", "error-skills");
+    valid = false;
+  }
+
+  return valid;
+}
+
+// Name.addEventListener("input", () => clearError(Name, "error-name"));
+// Email.addEventListener("input", () => clearError(Email, "error-email"));
+// phone.addEventListener("input", () => clearError(phone, "error-phone"));
+// Role.addEventListener("change", () => clearError(Role, "error-role"));
+
+// yearsExp.addEventListener("input", () => clearError(yearsExp, "error-years"));
+// skillsExp.addEventListener("input", () => clearError(skillsExp, "error-skills"));
 
 
 // ======= Add Worker =======
@@ -94,11 +166,16 @@ photoInput.addEventListener("change", e => {
 // ======= Workers Display =======
 const workersContainer = document.getElementById("workers-container");
 
+let assignedWorkers = [];
+
 const displayWorkerCard = () => {
+  // console.log(assignedWorkers);
   workersContainer.innerHTML = "";  
   workersContainer.classList.remove("hidden");
 
-  Workers.forEach((e, i) => {
+  const workersAvailable = Workers.filter(e => !assignedWorkers.includes(e.id));
+
+  workersAvailable.forEach((e, i) => {
     const card = document.createElement("div");
     card.innerHTML = `
       <div class="flex flex-row items-center gap-2 text-slate-800">
@@ -128,6 +205,7 @@ const form = document.getElementById("worker-form");
 
 document.getElementById("submit-worker").addEventListener("click", e => {
   e.preventDefault();
+  if (!validateForm()) return;
   addWorker();
   hide(modal);
   form.reset();
@@ -154,7 +232,7 @@ document.getElementById("cancel-worker-btn").addEventListener("click", () => hid
 workersModel.addEventListener("click", e => e.target === workersModel && hide(workersModel));
 
 let selectedWorker = null; 
-let assignedWorkers = [];
+
 
 const showWorkersByRole = (allowedRoles) => {
   show(workersModel);
@@ -184,11 +262,13 @@ const selectWorker = (worker) => {
   if (assignedWorkers.includes(worker.id)) return;
   assignedWorkers.push(worker.id);
   addWorkerToRoom(worker, currentRoomContainer);
-  updateSidebarUI();
+  workerContairer.innerHTML = "";
+  // updateSidebarUI();
   hide(workersModel);
 };
 
 
+const Reception = document.getElementById("Reception");
 function addWorkerToRoom(worker, container) {
     const div = document.createElement("div");
     div.className = "p-2 bg-white rounded flex items-center gap-2";
@@ -207,26 +287,17 @@ function addWorkerToRoom(worker, container) {
 
     div.querySelector(".deleteBtn").addEventListener("click", () => {
       assignedWorkers = assignedWorkers.filter(id => id !== worker.id);
+      workersAvailable = assignedWorkers;
+      displayWorkerCard();
       div.remove();
-      updateSidebarUI();
     });
+    // Reception.className += "bg-withe/40"
 
   container.appendChild(div);
   container.classList.remove("hidden");
+  displayWorkerCard()
 }
 
-function updateSidebarUI() {
-    workerContairer.innerHTML = "";
-
-    const available = Workers.filter(w => !assignedWorkers.includes(w.id));
-    available.forEach(worker => {
-        const item = document.createElement("div");
-        item.className = "worker-item";
-        item.textContent = worker.name;
-        item.onclick = () => selectWorker(worker);
-        workerContairer.appendChild(item);
-    });
-}
 
 
 const reseptionRoomContainer = document.getElementById("reseption-room-container");
@@ -235,6 +306,7 @@ const StaffRoomContainer = document.getElementById("Staff-room-container");
 const archiveRoomContainer = document.getElementById("archive-room-container");
 const serverRoomContainer = document.getElementById("server-room-container");
 const securityRoomContainer = document.getElementById("security-room-container");
+
 
 // ======= Specific Rooms =======
 let currentRoomContainer = null;
@@ -260,6 +332,7 @@ document.getElementById("Staff-room-btn").addEventListener("click", () => {
 
 document.getElementById("conference-room-btn").addEventListener("click", () => {
   currentRoomContainer = conferenceRoomContainer;
+  // console.log("comferonce")
   showWorkersByRole(["Nettoyage", "other", "Manager"], reseptionRoomContainer);
 });
 

@@ -14,221 +14,224 @@
             <button id="add-Worker-Button" class="ml-10 mt-3 bg-white text-black p-2 rounded cursor-pointer">Add New
                 Worker
             </button>
-            <div id="workers-container" class="hidden flex-col justify-center ml-2 w-55 bg-gray-50 mt-3 p-2 rounded cursor-pointer"></div>
+            <div id="workers-container"
+                class="hidden flex-col justify-center ml-2 w-55 bg-gray-50 mt-3 p-2 rounded cursor-pointer"></div>
         </div>
-
-        <!-- add worker modele  -->
-        <!-- Main Modal -->
+        <!-- ONE BIG MODAL -->
         <div id="crud-modal" class="hidden fixed inset-0 z-50 
-            flex justify-center items-center
-            bg-black/50">
+    flex justify-center items-center
+    bg-black/50 overflow-y-auto">
 
-            <div class="relative p-2 w-full max-w-md max-h-full">
-                <!-- Modal content -->
+            <div class="relative p-2 w-full max-w-md max-h-[90vh] overflow-y-auto">
                 <div class="relative bg-white border border-default rounded-base shadow-sm p-4 md:p-6">
 
-                    <!-- Modal header -->
+                    <!-- Modal Header -->
                     <div class="flex items-center justify-between border-b border-default pb-2 md:pb-2">
                         <h3 class="text-lg font-medium text-heading">Add New Worker</h3>
 
-                        <button id="close-model" type="button"
-                            class="text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading 
-                               rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center cursor-pointer">
+                        <button id="close-model" type="button" class="text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading 
+                        rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center cursor-pointer">
 
-                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                                height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
                             </svg>
-
-                            <span class="sr-only">Close modal</span>
                         </button>
                     </div>
 
-                    <!-- Modal body -->
-                    <form id="worker-form">
-                        <div class="grid gap-1 grid-cols-1 py-2 md:py-4">
+                    <!-- MODAL BODY -->
+                    <form id="worker-form" class="space-y-6 mt-4">
 
-                            <div class="col-span-2">
-                                <label for="name" class="block mb-2.5 text-sm font-medium text-heading">Name</label>
-                                <input type="text" id="name" name="name" class="bg-neutral-secondary-medium border border-default-medium 
-                                        text-heading text-sm rounded-base focus:ring-brand 
-                                      focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                                    placeholder="Type worker name" required>
-                                    <span  class=" text-xs mt-1 hidden" id="error-name"  style="color: red;">Name must be at max 10 characters.</span>
+                        <!-- BASIC INFO -->
+                        <div class="grid gap-1 grid-cols-1">
 
+                            <div>
+                                <label for="name" class="block mb-2 text-sm font-medium text-heading">Name</label>
+                                <input type="text" id="name" class="bg-neutral-secondary-medium border border-default-medium 
+                        text-heading text-sm rounded-base focus:ring-brand 
+                        focus:border-brand block w-full px-3 py-2.5 shadow-xs" placeholder="Worker name">
+                                <span id="error-name" class="text-xs mt-1 hidden text-red-500"></span>
                             </div>
 
-                            <div class="col-span-2">
-                                <label for="photo" class="block mb-2.5 text-sm font-medium text-heading">Photo</label>
-                                <input type="file" id="photo" name="photo" accept="image/*" class="block w-full text-sm text-heading rounded-base border border-default-medium 
-                                      text-heading text-sm rounded-base focus:ring-brand px-3 py-2.5
-                                      focus:border-brand">
-                                <img id="photo-preview" class="mt-2 w-5 h-5 object-cover rounded-full hidden" />
+                            <div>
+                                <label for="photo" class="block mb-2 text-sm font-medium text-heading">Photo</label>
+                                <input type="file" id="photo" accept="image/*"
+                                    class="bg-neutral-secondary-medium border border-default-medium 
+                            text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5">
+                                <img id="photo-preview" class="mt-2 w-10 h-10 object-cover rounded-full hidden" />
                             </div>
 
-                            <div class="col-span-2 sm:col-span-1">
-                                <label for="category" class="block mb-2.5 text-sm font-medium text-heading">Role</label>
-                                <select id="role" class="block w-91 px-3 py-3 bg-neutral-secondary-medium border 
-                                       border-default-medium text-heading text-sm rounded-base 
-                                       focus:ring-brand focus:border-brand shadow-xs placeholder:text-body" required>
-
+                            <div>
+                                <label for="role" class="block mb-2 text-sm font-medium text-heading">Role</label>
+                                <select id="role"
+                                    class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border 
+                            border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs">
                                     <option>Technicien IT</option>
                                     <option>Réceptionnistes</option>
                                     <option>Agent de sécurité</option>
                                     <option>Manager</option>
                                     <option>Nettoyage</option>
                                 </select>
-                                <p class="text-red-500 text-xs mt-1 hidden" id="error-role"></p>
+                                <p id="error-role" class="text-red-500 text-xs mt-1 hidden"></p>
                             </div>
 
-                            <div class="col-span-2">
-                                <label for="Email" class="block mb-2.5 text-sm font-medium text-heading">Email</label>
-                                <input type="email" id="Email" name="Email" class="bg-neutral-secondary-medium border border-default-medium 
-                                      text-heading text-sm rounded-base focus:ring-brand 
-                                      focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                                    placeholder="Type worker email" required>
-                                    <span class="text-xs mt-1 hidden" style="color: red;" id="error-email">Enter a valid email address.</span>
+                            <div>
+                                <label class="block mb-2 text-sm font-medium text-heading">Email</label>
+                                <input type="email" id="Email" class="bg-neutral-secondary-medium border border-default-medium 
+                            text-heading text-sm rounded-base focus:ring-brand 
+                            focus:border-brand block w-full px-3 py-2.5 shadow-xs" placeholder="example@mail.com">
+                                <span id="error-email" class="text-xs mt-1 hidden text-red-500"></span>
                             </div>
 
-                            <div class="col-span-2">
-                                <label for="phone"
-                                    class="block mb-2.5 text-sm font-medium text-heading">Téléphone</label>
-                                <input type="phone" id="phone" name="phone" class="bg-neutral-secondary-medium border border-default-medium 
-                                      text-heading text-sm rounded-base focus:ring-brand 
-                                      focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                                    placeholder="Type worker phone" required>
-                                    <p class="text-red-500 text-xs mt-1 hidden" id="error-phone"></p>
+                            <div>
+                                <label for="phone" class="block mb-2 text-sm font-medium text-heading">Phone</label>
+                                <input type="text" id="phone" class="bg-neutral-secondary-medium border border-default-medium 
+                            text-heading text-sm rounded-base focus:ring-brand 
+                            focus:border-brand block w-full px-3 py-2.5 shadow-xs" placeholder="Phone number">
+                                <p id="error-phone" class="text-red-500 text-xs mt-1 hidden"></p>
                             </div>
-
                         </div>
 
-                        <!-- Footer -->
+                        <!-- EXPERIENCE SECTION -->
+                        <div class="border-t pt-4">
+                            <h4 class="text-md font-semibold mb-2">Experience</h4>
+
+                            <div class="grid gap-4">
+
+                                <!-- Entreprise -->
+                                <div>
+                                    <label for="years-exp"
+                                        class="block mb-2 text-sm font-medium text-heading">Entreprise</label>
+                                    <input type="text" id="years-exp" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base 
+                                focus:ring-brand focus:border-brand block w-full px-3 py-2.5"
+                                        placeholder="Nom de l'entreprise">
+                                    <p id="error-years" class="text-red-500 text-xs mt-1 hidden"></p>
+                                </div>
+
+                                <!-- Post -->
+                                <div>
+                                    <label for="skills-exp" class="block mb-2 text-sm font-medium text-heading">Post
+                                        occupé</label>
+                                    <input type="text" id="skills-exp" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base 
+                                focus:ring-brand focus:border-brand block w-full px-3 py-2.5"
+                                        placeholder="Post occupé">
+                                    <p id="error-skills" class="text-red-500 text-xs mt-1 hidden"></p>
+                                </div>
+
+                                <!-- Dates -->
+                                <div>
+                                    <label class="block mb-2 text-sm font-medium text-heading">Dates</label>
+
+                                    <input type="text" id="companies-exp" class="hidden">
+
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <input type="date" id="start-date" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base 
+                                    block w-full px-3 py-2.5">
+
+                                        <input type="date" id="end-date" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base 
+                                    block w-full px-3 py-2.5">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FOOTER -->
                         <div class="flex items-center space-x-4 border-t border-default pt-4 md:pt-6">
                             <button id="submit-worker" type="submit" class="inline-flex items-center text-white bg-black hover:bg-brand-strong 
-                                   box-border border border-transparent focus:ring-4 focus:ring-brand-medium 
-                                   shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 
-                                   focus:outline-none cursor-pointer">
+                        border border-transparent shadow-xs font-medium leading-5 rounded-base 
+                        text-sm px-4 py-2.5 cursor-pointer">Save Worker</button>
 
-                                <svg class="w-4 h-4 me-1.5 -ms-0.5" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="M5 12h14m-7 7V5" />
-                                </svg>
 
-                                Add new Worker
-                            </button>
-
-                            <button id="experience" type="button" class="text-body bg-neutral-secondary-medium box-border border 
-                                   border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading 
-                                   focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 
-                                   rounded-base text-sm px-4 py-2.5 focus:outline-none cursor-pointer">
-                                Experience
-                            </button>
-
-                            <button id="cancel-model" type="button" class="text-body bg-neutral-secondary-medium box-border border 
-                                   border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading 
-                                   focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 
-                                   rounded-base text-sm px-4 py-2.5 focus:outline-none cursor-pointer">
-                                Cancel
-                            </button>
+                            <button id="cancel-model" type="button" class="text-body bg-neutral-secondary-medium border border-default-medium 
+                        hover:bg-neutral-tertiary-medium hover:text-heading shadow-xs font-medium 
+                        leading-5 rounded-base text-sm px-4 py-2.5 cursor-pointer">Cancel</button>
                         </div>
+
+                        <!-- EXPERIENCE SECTION -->
+                        <div class="border-t pt-4">
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-md font-semibold mb-2">Experience</h4>
+
+                                <!-- ADD EXPERIENCE BUTTON -->
+                                <button id="add-exp-btn" type="button"
+                                    class="px-3 py-1.5 bg-blue-500 text-white rounded text-sm">
+                                    + Add Experience
+                                </button>
+                            </div>
+
+                            <!-- ALL EXPERIENCES WILL BE INSERTED HERE -->
+                            <div id="experience-list" class="space-y-4"></div>
+                        </div>
+
                     </form>
                 </div>
             </div>
         </div>
 
-        <!-- Worker Experience Modal -->
-        <div id="experience-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 bg-opacity-50">
-            <div class="relative p-4 w-full max-w-md max-h-full">
-                <!-- Modal content -->
-                <div class="relative bg-white border border-default rounded-base shadow-sm p-4 md:p-6">
+        <!-- EXPERIENCE MODAL (SMALL) -->
+        <div id="experience-modal" class="hidden fixed inset-0 z-50 flex justify-center items-center bg-black/50">
+            <div class="bg-white w-full max-w-md rounded-lg p-5">
 
-                    <!-- Modal header -->
-                    <div class="flex items-center justify-between border-b border-default pb-4 md:pb-5">
-                        <h3 class="text-lg font-medium text-heading">Add Worker Experience</h3>
-                        <button id="close-exp-modal" type="button"
-                            class="text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center cursor-pointer">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
+                <h3 class="text-lg font-semibold mb-4">Add Experience</h3>
+
+                <form id="experience-form" class="space-y-4">
+
+                    <div>
+                        <label for="years-exp" class="text-sm font-medium">Entreprise</label>
+                        <input id="years-exp" class="w-full border rounded p-2" placeholder="Entreprise name">
+                        <p id="error-years" class="text-red-500 text-xs hidden"></p>
                     </div>
 
-                    <!-- Modal body -->
-                    <form id="experience-form">
-                        <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
+                    <div>
+                        <label for="skills-exp" class="text-sm font-medium">Post occupé</label>
+                        <input id="skills-exp" class="w-full border rounded p-2" placeholder="Job title">
+                        <p id="error-skills" class="text-red-500 text-xs hidden"></p>
+                    </div>
 
-                            <!-- Years of Experience -->
-                            <div class="col-span-2 sm:col-span-1">
-                                <label for="years-exp" class="block mb-2.5 text-sm font-medium text-heading">Years of
-                                    Experience</label>
-                                <input type="number" id="years-exp" name="years-exp" min="0"
-                                    class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                                    placeholder="e.g. 3" required>
-                            </div>
-
-                            <!-- Skills -->
-                            <div class="col-span-2 sm:col-span-1">
-                                <label for="skills-exp"
-                                    class="block mb-2.5 text-sm font-medium text-heading">Skills</label>
-                                <input type="text" id="skills-exp" name="skills-exp"
-                                    class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                                    placeholder="e.g. HTML, CSS, JS" required>
-                            </div>
-
-                            <!-- Previous Companies -->
-                            <div class="col-span-2">
-                                <label for="companies-exp"
-                                    class="block mb-2.5 text-sm font-medium text-heading">Previous Companies</label>
-                                <input type="text" id="companies-exp" name="companies-exp"
-                                    class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                                    placeholder="Company names separated by commas">
-                            </div>
-
+                    <div>
+                        <label class="text-sm font-medium">Dates</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="date" id="start-date" class="w-full border rounded p-2">
+                            <input type="date" id="end-date" class="w-full border rounded p-2">
                         </div>
+                    </div>
 
-                        <!-- Footer -->
-                        <div class="flex items-center space-x-4 border-t border-default pt-4 md:pt-6">
-                            <button id="submit-exp" type="submit"
-                                class="inline-flex items-center text-white bg-black hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none cursor-pointer">
-                                Save Experience
-                            </button>
-                            <button id="cancel-exp" type="button"
-                                class="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none cursor-pointer">
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
+                </form>
 
+                <div class="flex justify-end gap-3 mt-4">
+                    <button id="cancel-exp" class="px-4 py-2 bg-gray-200 rounded">Cancel</button>
+                    <button id="submit-exp" class="px-4 py-2 bg-black text-white rounded">Save</button>
                 </div>
             </div>
         </div>
 
-        <div id="workers-model" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 bg-opacity-50">
+
+        <div id="workers-model"
+            class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 bg-opacity-50">
             <div class="relative p-4 w-full max-w-md max-h-full flex flex-col">
-                <div id="worker-contairer" class="relative bg-white border border-default rounded-base shadow-sm p-4 md:p-6 rounded"></div>
-                <button id="cancel-worker-btn" class="bg-red-300 p-2 rounded justify-center items-center">cancel</button>
+                <div id="worker-contairer"
+                    class="relative bg-white border border-default rounded-base shadow-sm p-4 md:p-6 rounded"></div>
+                <button id="cancel-worker-btn"
+                    class="bg-red-300 p-2 rounded justify-center items-center">cancel</button>
             </div>
         </div>
 
 
 
         <div id="floor" class="relative flex-1 bg-cover bg-center"
-            style="background-image: url('./img/icons8-garbage-48.png');">
+            style="background-image: url('./img/WorkSphere_main.jpg');">
 
             <div class="grid grid-cols-11 grid-rows-6 gap-1 h-full w-full">
-                <div id="Salle-de-Reseption" class="col-span-4 row-span-2 -mr-5 flex flex-col items-center justify-center">
+                <div id="Salle-de-Reseption"
+                    class="col-span-4 row-span-2 -mr-5  bg-red-400/50 flex flex-col items-center justify-center">
                     <h5 class="text-black font-medium">Reseption room</h5>
                     <button id="reseption-room-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
-                    <div id="reseption-room-container" class="hidden flex flex-col gap-1"></div>                
+                    <div id="reseption-room-container" class="hidden flex flex-col gap-1"></div>
                 </div>
 
-                <div id="Reception" class="col-span-4 row-span-4 col-start-1 row-start-3 bg-red-400/50 -mr-5 flex flex-col justify-center items-center">
+                <div id="Reception"
+                    class="col-span-4 row-span-4 col-start-1 row-start-3 -mr-5 flex flex-col justify-center items-center">
                     <h5 class="text-black font-medium">The conference room</h5>
                     <button id="conference-room-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
                     <div id="conference-room-container" class="hidden flex flex-col gap-1"></div>
@@ -237,29 +240,33 @@
                 <div class="col-span-2 row-span-6 col-start-5 row-start-1 ml-5"></div>
                 <div class="col-span-6 row-span-2 col-start-7 row-start-3"></div>
 
-                                <!-- Staff room -->
-                <div class="col-span-3 row-span-2 col-start-7 row-start-5 mr-13 flex flex-col justify-center items-center">
+                <!-- Staff room -->
+                <div
+                    class="col-span-3 row-span-2 col-start-7 row-start-5 mr-13 flex flex-col justify-center items-center">
                     <h5 class="text-black font-medium">Staff room</h5>
                     <button id="Staff-room-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
                     <div id="Staff-room-container" class="hidden flex flex-col gap-1"></div>
                 </div>
 
-                                <!-- archive Room  -->
-                <div class="col-span-3 row-span-2 col-start-10 row-start-5 bg-red-400/50 -ml-13 flex flex-col justify-center items-center">
+                <!-- archive Room  -->
+                <div
+                    class="col-span-3 row-span-2 col-start-10 row-start-5 bg-red-400/50 -ml-13 flex flex-col justify-center items-center">
                     <h5 class="text-black font-medium">The archive room</h5>
                     <button id="archive-room-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
                     <div id="archive-room-container" class="hidden flex flex-col gap-1"></div>
                 </div>
 
-                                <!-- server Room -->
-                <div class="col-span-3 row-span-2 col-start-7 row-start-1 bg-red-400/50 mr-13 flex flex-col justify-center items-center">
+                <!-- server Room -->
+                <div
+                    class="col-span-3 row-span-2 col-start-7 row-start-1 bg-red-400/50 mr-13 flex flex-col justify-center items-center">
                     <h5 class="text-black font-medium">server Room</h5>
                     <button id="server-room-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
                     <div id="server-room-container" class="hidden flex flex-col gap-1"></div>
                 </div>
 
-                                <!-- Security Room -->
-                <div id="Salle-de-securite" class="col-span-3 row-span-2 col-start-10 row-start-1 bg-red-400/50 -ml-13 flex flex-col justify-center items-center">
+                <!-- Security Room -->
+                <div id="Salle-de-securite"
+                    class="col-span-3 row-span-2 col-start-10 row-start-1 bg-red-400/50 -ml-13 flex flex-col justify-center items-center">
                     <h5 class="text-black font-medium">Security Room</h5>
                     <button id="Salle-securite-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
                     <div id="security-room-container" class="hidden flex flex-col gap-1"></div>
@@ -268,7 +275,30 @@
 
         </div>
     </div>
-            <script src="./src/script.js"></script>
+
+    <!-- WORKER DETAILS MODAL -->
+<div id="worker-details-modal"
+     class="hidden fixed inset-0 bg-black/50 z-50 flex justify-center items-center">
+
+    <div class="bg-white w-full max-w-lg rounded-lg p-6 overflow-y-auto max-h-[80vh]">
+
+        <h2 class="text-xl font-bold mb-4">Worker Details</h2>
+
+        <div id="worker-details-content" class="space-y-4">
+            <!-- JS will fill worker details here -->
+        </div>
+
+        <div class="flex justify-end mt-4">
+            <button id="close-details"
+                class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
+                Close
+            </button>
+        </div>
+
+    </div>
+</div>
+
+    <script src="./src/script.js"></script>
 </body>
 
 </html>

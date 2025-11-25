@@ -10,12 +10,13 @@
 
 <body>
     <div class="flex h-screen">
-        <div class="w-60 border-2 bg-black">
+        <div id="main-cont" class="w-60 border-2 bg-black">
             <button id="add-Worker-Button" class="ml-10 mt-3 bg-white text-black p-2 rounded cursor-pointer">Add New
                 Worker
             </button>
             <div id="workers-container"
                 class="hidden flex-col justify-center ml-2 w-55 bg-gray-50 mt-3 p-2 rounded cursor-pointer"></div>
+                <!-- <input id="input-search" type="text" class="bg-white rounded"> -->
         </div>
         <!-- ONE BIG MODAL -->
         <div id="crud-modal" class="hidden fixed inset-0 z-50 
@@ -66,12 +67,13 @@
                                 <label for="role" class="block mb-2 text-sm font-medium text-heading">Role</label>
                                 <select id="role"
                                     class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border 
-                            border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs">
+                                        border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs">
                                     <option>Technicien IT</option>
                                     <option>Réceptionnistes</option>
                                     <option>Agent de sécurité</option>
                                     <option>Manager</option>
                                     <option>Nettoyage</option>
+                                    <option>Invited</option>
                                 </select>
                                 <p id="error-role" class="text-red-500 text-xs mt-1 hidden"></p>
                             </div>
@@ -93,49 +95,6 @@
                             </div>
                         </div>
 
-                        <!-- EXPERIENCE SECTION -->
-                        <div class="border-t pt-4">
-                            <h4 class="text-md font-semibold mb-2">Experience</h4>
-
-                            <div class="grid gap-4">
-
-                                <!-- Entreprise -->
-                                <div>
-                                    <label for="years-exp"
-                                        class="block mb-2 text-sm font-medium text-heading">Entreprise</label>
-                                    <input type="text" id="years-exp" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base 
-                                focus:ring-brand focus:border-brand block w-full px-3 py-2.5"
-                                        placeholder="Nom de l'entreprise">
-                                    <p id="error-years" class="text-red-500 text-xs mt-1 hidden"></p>
-                                </div>
-
-                                <!-- Post -->
-                                <div>
-                                    <label for="skills-exp" class="block mb-2 text-sm font-medium text-heading">Post
-                                        occupé</label>
-                                    <input type="text" id="skills-exp" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base 
-                                focus:ring-brand focus:border-brand block w-full px-3 py-2.5"
-                                        placeholder="Post occupé">
-                                    <p id="error-skills" class="text-red-500 text-xs mt-1 hidden"></p>
-                                </div>
-
-                                <!-- Dates -->
-                                <div>
-                                    <label class="block mb-2 text-sm font-medium text-heading">Dates</label>
-
-                                    <input type="text" id="companies-exp" class="hidden">
-
-                                    <div class="grid grid-cols-2 gap-2">
-                                        <input type="date" id="start-date" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base 
-                                    block w-full px-3 py-2.5">
-
-                                        <input type="date" id="end-date" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base 
-                                    block w-full px-3 py-2.5">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- FOOTER -->
                         <div class="flex items-center space-x-4 border-t border-default pt-4 md:pt-6">
                             <button id="submit-worker" type="submit" class="inline-flex items-center text-white bg-black hover:bg-brand-strong 
@@ -148,19 +107,16 @@
                         leading-5 rounded-base text-sm px-4 py-2.5 cursor-pointer">Cancel</button>
                         </div>
 
-                        <!-- EXPERIENCE SECTION -->
                         <div class="border-t pt-4">
                             <div class="flex items-center justify-between">
                                 <h4 class="text-md font-semibold mb-2">Experience</h4>
 
-                                <!-- ADD EXPERIENCE BUTTON -->
                                 <button id="add-exp-btn" type="button"
-                                    class="px-3 py-1.5 bg-blue-500 text-white rounded text-sm">
+                                    class="px-3 py-1.5 bg-red-500 text-white rounded text-sm cursor-pointer">
                                     + Add Experience
                                 </button>
                             </div>
 
-                            <!-- ALL EXPERIENCES WILL BE INSERTED HERE -->
                             <div id="experience-list" class="space-y-4"></div>
                         </div>
 
@@ -169,7 +125,6 @@
             </div>
         </div>
 
-        <!-- EXPERIENCE MODAL (SMALL) -->
         <div id="experience-modal" class="hidden fixed inset-0 z-50 flex justify-center items-center bg-black/50">
             <div class="bg-white w-full max-w-md rounded-lg p-5">
 
@@ -231,7 +186,7 @@
                 </div>
 
                 <div id="Reception"
-                    class="col-span-4 row-span-4 col-start-1 row-start-3 -mr-5 flex flex-col justify-center items-center">
+                    class="col-span-4 row-span-4 col-start-1 bg-red-400/50 row-start-3 -mr-5 flex flex-col justify-center items-center">
                     <h5 class="text-black font-medium">The conference room</h5>
                     <button id="conference-room-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
                     <div id="conference-room-container" class="hidden flex flex-col gap-1"></div>
@@ -242,7 +197,7 @@
 
                 <!-- Staff room -->
                 <div
-                    class="col-span-3 row-span-2 col-start-7 row-start-5 mr-13 flex flex-col justify-center items-center">
+                    class="col-span-3 row-span-2 col-start-7 row-start-5 bg-red-400/50 mr-13 flex flex-col justify-center items-center">
                     <h5 class="text-black font-medium">Staff room</h5>
                     <button id="Staff-room-btn" class="bg-blue-400 p-2 rounded cursor-pointer">+</button>
                     <div id="Staff-room-container" class="hidden flex flex-col gap-1"></div>

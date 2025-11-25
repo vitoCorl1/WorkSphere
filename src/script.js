@@ -44,46 +44,58 @@ const Workers = [
   { id: 27, name: "somia", role: "Nettoyage", email: "hsdhsd@gmai.com", phone: "034333334734", photo: "../img/manicon.png"},
 ];
 
-// ======= INLINE VALIDATION SYSTEM =======
-
-function showError(input, message, errorId) {
-  const errorEl = document.getElementById(errorId);
-  input.classList.add("text-red-500","border-red-500", "focus:border-red-500");
-  errorEl.textContent = message;
-  errorEl.classList.remove("hidden");
+function clearInputError(input, errorId) {
+    const errorEl = document.getElementById(errorId);
+    input.classList.remove("border-red-500", "text-red-500");
+    errorEl.classList.add("hidden");
 }
 
-
-const errorName = document.getElementById('error-name'); 
-const errorEmail = document.getElementById('error-email');
+function setInputError(input, errorId, message) {
+    const errorEl = document.getElementById(errorId);
+    input.classList.add("border-red-500", "text-red-500");
+    errorEl.textContent = message;
+    errorEl.classList.remove("hidden");
+}
 
 function validateForm() {
-  let valid = true;
+    let valid = true;
 
-  
+    // Clear previous errors
+    clearInputError(Name, "error-name");
+    clearInputError(Email, "error-email");
+    clearInputError(phone, "error-phone");
+    clearInputError(Role, "error-role");
 
-  if (Name.value.trim().length < 3) {
-    errorName.style.display = 'block';
-  } else if (Name.value.trim().length > 10){
-    errorName.style.display = 'block';
-  }
+    // 1️⃣ Name validation
+    if (Name.value.trim().length < 3) {
+        setInputError(Name, "error-name", "Name must be at least 3 characters.");
+        valid = false;
+    } else if (Name.value.trim().length > 20) {
+        setInputError(Name, "error-name", "Name cannot exceed 20 characters.");
+        valid = false;
+    }
 
+    // 2️⃣ Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(Email.value.trim())) {
+        setInputError(Email, "error-email", "Enter a valid email.");
+        valid = false;
+    }
 
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(Email.value.trim())) {
-    errorEmail.style.display = 'block';    
-  }
+    // 3️⃣ Phone validation
+    const phoneRegex = /^[0-9]{8,15}$/;
+    if (!phoneRegex.test(phone.value.trim())) {
+        setInputError(phone, "error-phone", "Phone must contain 8–15 digits.");
+        valid = false;
+    }
 
-  if (!/^[0-9]{8,15}$/.test(phone.value.trim())) {
-    showError(phone, "Phone must contain 8-15 digits.", "error-phone");
-    valid = false;
-  }
+    // 4️⃣ Role validation (must not be empty)
+    if (!Role.value.trim()) {
+        setInputError(Role, "error-role", "Please choose a role.");
+        valid = false;
+    }
 
-  if (Role.value.trim() === "") {
-    showError(Role, "Please select a role.", "error-role");
-    valid = false;
-  }
-
-  return valid;
+    return valid;
 }
 
 function syncDates() {
@@ -93,8 +105,6 @@ function syncDates() {
 startDate.addEventListener("change", syncDates);
 endDate.addEventListener("change", syncDates);
 
-
-// ===== EXPERIENCE MODAL VALIDATION =====
 function validateExperience() {
   let valid = true;
 
@@ -114,7 +124,7 @@ function validateExperience() {
   return valid;
 }
 
-// ======= Add Worker =======
+// Add Worker
 const addWorker = () => {
   const worker = {
     id: Date.now(),
@@ -147,13 +157,12 @@ photoInput.addEventListener("change", e => {
 });
 
 
-// ======= Workers Display =======
+// Workers Display
 const workersContainer = document.getElementById("workers-container");
 
 let assignedWorkers = [];
 
 const displayWorkerCard = () => {
-  // console.log(assignedWorkers);
   workersContainer.innerHTML = "";  
   workersContainer.classList.remove("hidden");
 
@@ -247,8 +256,29 @@ document.getElementById("submit-worker").addEventListener("click", e => {
   
   if (!validateForm()) return;
 
-  // Collect experiences from experience blocks
   const blocks = document.querySelectorAll("#experience-list > div");
+  if (blocks.length === 0) {
+    alert("⚠️ You must add at least ONE experience before adding a worker.");
+    return;
+  }
+
+  for (let block of blocks) {
+    const entreprise = block.querySelector(".exp-entreprise").value.trim();
+    const post = block.querySelector(".exp-post").value.trim();
+    const start = block.querySelector(".exp-start").value;
+    const end = block.querySelector(".exp-end").value;
+
+    if (!entreprise || !post || !start || !end) {
+        alert("All experience fields must be filled.");
+        return;
+    }
+
+    if (new Date(start) > new Date(end)) {
+        alert("Start date cannot be after end date.");
+        return;
+    }
+  }
+
   const experiences = Array.from(blocks).map(block => ({
     entreprise: block.querySelector(".exp-entreprise").value.trim(),
     post: block.querySelector(".exp-post").value.trim(),
@@ -380,14 +410,15 @@ function addWorkerToRoom(worker, container) {
       roomData[roomId].workers = roomData[roomId].workers.filter(id => id !== worker.id);
       
       assignedWorkers = assignedWorkers.filter(id => id !== worker.id);
-      
-      if(assignedWorkers.length === 0) parent.classList.add("bg-red-400/50")
+      console.log("roomdata :", roomData[roomId].workers);
+      if(roomData[roomId].workers.length === 0) parent.classList.add("bg-red-400/50")
 
       workersAvailable = assignedWorkers;
 
       div.remove();
       displayWorkerCard();
     });
+    
   parent.classList.remove("bg-red-400/50")
   container.appendChild(div);
   container.classList.remove("hidden");
